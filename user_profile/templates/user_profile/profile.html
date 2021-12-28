@@ -4,8 +4,16 @@
 {% endblock %}
 {% block content %}
     <p>Prénom : {{ profile.first_name }}</p>
-    <p>Nom : {{ profile.last_name }}</p>
-    <p>date de naissance : {{ profile.date_of_birth }}</p>
-    <p>Profession : {{ profile.profession }}</p>
-    <p>Résidence : {{ profile.residence }}</p>
+    {% if profile.last_name %}
+        <p>Nom : {{ profile.last_name }}</p>
+    {%  endif %}
+    {% if profile.date_of_birth %}
+        <p>Date de naissance : {{ profile.date_of_birth }}</p>
+    {%  endif %}
+    {% if profile.profession %}
+        <p>Profession : {{ profile.profession }}</p>
+    {%  endif %}
+    {% if profile.residence %}
+        <p>Lieu de résidence : {{ profile.residence }}</p>
+    {%  endif %}
 {% endblock %}
