@@ -1,19 +1,22 @@
 {% extends "base.html" %}
+<
 {% block title %}
-    {{ profile.first_name }} {{ profile.last_name }}
+    <b>{{ profile.first_name }} {{ profile.last_name }}</b>
 {% endblock %}
 {% block content %}
-    <p>Prénom : {{ profile.first_name }}</p>
-    {% if profile.last_name %}
-        <p>Nom : {{ profile.last_name }}</p>
-    {%  endif %}
-    {% if profile.date_of_birth %}
-        <p>Date de naissance : {{ profile.date_of_birth }}</p>
-    {%  endif %}
-    {% if profile.profession %}
-        <p>Profession : {{ profile.profession }}</p>
-    {%  endif %}
-    {% if profile.residence %}
-        <p>Lieu de résidence : {{ profile.residence }}</p>
-    {%  endif %}
+    <div style="font-size: 1.2em; padding-top: 50px; padding-left: 150px; padding-right: 150px;">
+        <p style="padding-bottom: 10px;">Prénom : {{ profile.first_name }}</p>
+        {% if profile.last_name %}
+            <p style="padding-bottom: 10px;">Nom : {{ profile.last_name }}</p>
+        {%  endif %}
+        {% if profile.date_of_birth %}
+            <p style="padding-bottom: 10px;">Date de naissance : {{ profile.date_of_birth }}</p>
+        {%  endif %}
+        {% if profile.profession %}
+            <p style="padding-bottom: 10px;">Profession : {{ profile.profession }}</p>
+        {%  endif %}
+        {% if profile.residence %}
+            <p style="padding-bottom: 10px;">Lieu de résidence : {{ profile.residence }}</p>
+        {%  endif %}
+    </div>
 {% endblock %}

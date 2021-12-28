@@ -3,7 +3,7 @@ from .models import UserProfile
 
 
 class UserProfileForm(forms.ModelForm):
-    first_name = forms.CharField(required=True, label="prénom")
+    first_name = forms.CharField(required=True, label="Prénom")
     last_name = forms.CharField(required=False, label="Nom")
     date_of_birth = forms.DateField(
         required=False,
