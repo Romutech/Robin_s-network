@@ -3,9 +3,12 @@
     {{ profile.first_name }} {{ profile.last_name }}
 {% endblock %}
 {% block content %}
-    <form action="{% url 'edit_profile' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-    <input type="submit" value="Submit" />
-    </form>
+    <div style="padding-top: 50px; padding-left: 150px; padding-right: 150px;">
+        <form action="{% url 'edit_profile' %}" method="post">
+            {% csrf_token %}
+            <div style="font-size: 1.2em" > {{ form.as_p }} </div>
+            <br>
+        <input style="background-color: grey; color: white; padding: 0.6em; border-radius: 6px; font-size:1.2em" type="submit" value=" Enregistrer " />
+        </form>
+    </div>
 {% endblock %}
