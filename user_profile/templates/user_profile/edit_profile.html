@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% block title %}
-    {{ profile.first_name }} {{ profile.last_name }}
+    Edition de votre profil
 {% endblock %}
 {% block content %}
-    <div style="padding-top: 50px; padding-left: 150px; padding-right: 150px;">
+    <div style="padding-top: 50px; padding-left: 7%; padding-right: 6%; padding-bottom: 30px;" class="ds">
+        <p style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;">Renseignement des informations du profil : </p>
         <form action="{% url 'edit_profile' %}" method="post">
             {% csrf_token %}
             <div style="font-size: 1.2em" > {{ form.as_p }} </div>
             <br>
-        <input style="background-color: grey; color: white; padding: 0.6em; border-radius: 6px; font-size:1.2em" type="submit" value=" Enregistrer " />
+        <input style="background-color: grey; color: white; padding: 0.6em; border-radius: 6px; font-size:1.15em" type="submit" value=" Enregistrer " />
         </form>
+
     </div>
 {% endblock %}

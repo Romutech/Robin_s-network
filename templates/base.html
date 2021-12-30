@@ -13,7 +13,6 @@
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     <!--external css-->
     <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/zabuto_calendar.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/gritter/css/jquery.gritter.css' %}" />
 
     <!-- Custom styles for this template -->
@@ -87,12 +86,17 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-              	  <p class="centered"><a href="profile.html"><img src="{% static 'img/user.jpg' %}" class="img-circle" width="170"></a></p>
+                  {% if profile_picture %}
+                    <p class="centered"><a href="{% url 'upload_profile_picture' %}"><img src="{{ profile_picture.picture.url }}" class="img-circle" width="150"></a></p>
+                  {% else %}
+                    <p class="centered"><a href="{% url 'upload_profile_picture' %}"><img src="{% static 'img/profile_picture.jpg' %}" class="img-circle" width="150"></a></p>
+                  {% endif %}
               	  <br>
                   <h4 class="centered" style="color: white">Robin Muller</h4>
                   <hr>
                   <li><a href="{% url 'read_profile'  %}">Profil</a></li>
                   <li><a href="{% url 'edit_profile'  %}">Editer le Profil</a></li>
+                  <li><a href="{% url 'upload_profile_picture'  %}">Modifier la photo de profil</a></li>
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -106,13 +110,11 @@
                   <div class="col-lg-9 main-chart">
                        <section id="content">
                            <!-- *********************** MAIN CONTENT ********************************* -->
-                           <h1> Profil de {% block title %}{% endblock %}</h1>
+                           <h3> {% block title %}{% endblock %}</h3>
                            <hr>
-                           <br>
                            <p>
                                {% block content %}{% endblock %}
                            </p>
-                           <br>
                            <!-- ********************** END MAIN CONTENT ******************************* -->
                        </section>
                   </div><!-- /col-lg-9 END SECTION MIDDLE -->
@@ -162,6 +164,5 @@
 
     <!--script for this page-->
     <script src="{% static 'js/sparkline-chart.js' %}"></script>
-	<script src="{% static 'js/zabuto_calendar.js' %}"></script>
   </body>
 </html>

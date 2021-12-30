@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile
+from .models import UserProfile, ProfilePicture
 
 
 class UserProfileForm(forms.ModelForm):
@@ -12,8 +12,15 @@ class UserProfileForm(forms.ModelForm):
                   "Exemple : 13/06/1981"
     )
     profession = forms.CharField(required=False, label="Profession")
-    residence = forms.CharField(required=False, label="Lieun de résidence")
+    residence = forms.CharField(required=False, label="Lieu de résidence")
 
     class Meta:
         model = UserProfile
+        exclude = ['user']
+
+
+class ProfilePictureForm(forms.ModelForm):
+    picture = forms.ImageField(required=True, label="Photo de profil")
+    class Meta:
+        model = ProfilePicture
         exclude = ['user']

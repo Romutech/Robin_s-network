@@ -1,22 +1,31 @@
 {% extends "base.html" %}
-<
+
 {% block title %}
-    <b>{{ profile.first_name }} {{ profile.last_name }}</b>
+    Profil de <b>{{ profile.first_name }} {{ profile.last_name }}</b>
+    <img src="{{ request.user.picture_profile.picture.url }}"/>
 {% endblock %}
 {% block content %}
-    <div style="font-size: 1.2em; padding-top: 50px; padding-left: 150px; padding-right: 150px;">
-        <p style="padding-bottom: 10px;">Prénom : {{ profile.first_name }}</p>
-        {% if profile.last_name %}
-            <p style="padding-bottom: 10px;">Nom : {{ profile.last_name }}</p>
-        {%  endif %}
-        {% if profile.date_of_birth %}
-            <p style="padding-bottom: 10px;">Date de naissance : {{ profile.date_of_birth }}</p>
-        {%  endif %}
-        {% if profile.profession %}
-            <p style="padding-bottom: 10px;">Profession : {{ profile.profession }}</p>
-        {%  endif %}
-        {% if profile.residence %}
-            <p style="padding-bottom: 10px;">Lieu de résidence : {{ profile.residence }}</p>
-        {%  endif %}
+    <div style="font-size: 1.2em; marging-top: 10px; margin-bottom: 10px; padding-top: 20px; padding-bottom: 20px; padding-left: 50px; padding-right: 50px;" class="ds">
+        <p class="centered"><a href="{% url 'upload_profile_picture' %}"><img src="{{ profile_picture.picture.url }}" class="img-circle" width="200" style="padding-top: 20px;"></a></p>
     </div>
+    <div class="centered ds" style="font-size: 1.2em; marging-top: 10px; margin-bottom: 10px; padding-top: 20px; padding-bottom: 20px; padding-left: 50px; padding-right: 50px;">
+        <p style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;" class="centered"> Informations de profil </p>
+        <p style="padding-bottom: 5px;">Prénom : {{ profile.first_name }}</p>
+        {% if profile.last_name %}
+            <p style="padding-bottom: 5px;">Nom : {{ profile.last_name }}</p>
+        {% endif %}
+        {% if profile.date_of_birth %}
+            <p style="padding-bottom: 5px;">Date de naissance : {{ profile.date_of_birth }}</p>
+        {% endif %}
+        {% if profile.profession %}
+            <p style="padding-bottom: 5px;">Profession : {{ profile.profession }}</p>
+        {% endif %}
+        {% if profile.residence %}
+            <p>Lieu de résidence : {{ profile.residence }}</p>
+        {% endif %}
+    </div>
+    <div class="centered ds" style="font-size: 1.2em; marging-top: 10px; margin-bottom: 10px; padding-top: 20px; padding-bottom: 20px; padding-left: 50px; padding-right: 50px;">
+        <p style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;" class="centered"> Publications </p>
+    </div>
+    <hr><br>
 {% endblock %}
