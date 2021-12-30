@@ -86,17 +86,19 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-                  {% if profile_picture %}
-                    <p class="centered"><a href="{% url 'upload_profile_picture' %}"><img src="{{ profile_picture.picture.url }}" class="img-circle" width="150"></a></p>
+                  {% if picture_connected_user %}
+                    <p class="centered"><a href="{% url 'upload_profile_picture' %}"><img src="{{ picture_connected_user.picture.url }}" class="img-circle" width="150"></a></p>
                   {% else %}
                     <p class="centered"><a href="{% url 'upload_profile_picture' %}"><img src="{% static 'img/profile_picture.jpg' %}" class="img-circle" width="150"></a></p>
                   {% endif %}
-              	  <br>
-                  <h4 class="centered" style="color: white">Robin Muller</h4>
-                  <hr>
-                  <li><a href="{% url 'read_profile'  %}">Profil</a></li>
-                  <li><a href="{% url 'edit_profile'  %}">Editer le Profil</a></li>
-                  <li><a href="{% url 'upload_profile_picture'  %}">Modifier la photo de profil</a></li>
+                  {% if request.user.is_authenticated %}
+                    <br>
+                    <h4 class="centered" style="color: white">{{ name_connected_user}}</h4>
+                    <hr>
+                    <li><a href="{% url 'read_profile' request.user.id %}">Profil</a></li>
+                    <li><a href="{% url 'edit_profile'  %}">Editer le Profil</a></li>
+                    <li><a href="{% url 'upload_profile_picture'  %}">Modifier la photo de profil</a></li>
+                  {% endif %}
               </ul>
               <!-- sidebar menu end-->
           </div>
