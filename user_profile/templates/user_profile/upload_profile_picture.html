@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Modification de votre photo de profil
+{% endblock %}
+{% block content %}
+    <div class="centered">
+        <div style="font-size: 1.15em">
+                {% if profile_picture %}
+                    <div class="ds">
+                        <p style="font-size:1.5em;">Photo actuelle : </p>
+                        <p class="centered"><img style="margin-bottom: 20px;" src="{{ profile_picture.picture.url }}" width="270"></p>
+                    </div>
+                    <div class="ds" style="margin-top: 10px; padding-bottom: 10px;">
+                        <div style="margin-top: 30px; margin-bottom: 30px;">
+                            <p style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;">Supprimer la photo actuelle : </p>
+                            <a class="danger" href="{% url 'delete_profile_picture' %}" style="background-color: red; color: white; padding: 0.6em; border-radius: 6px;" > Supprimer la photo </a>
+                        </div>
+                    </div>
+                {% endif %}
+            <div class="ds" style="margin-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">
+                <p style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;">Modifier la photo actuelle : </p>
+                <br>
+                <form action="{% url 'upload_profile_picture' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                <input style="background-color: grey; color: white; padding: 0.6em; border-radius: 6px; margin-top: 30px; margin-bottom: 30px;" type="submit" value=" Modifier la photo " />
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
