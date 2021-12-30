@@ -36,9 +36,9 @@ class ProfilePicture(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     @staticmethod
-    def is_exist(request):
+    def get_profile_picture_if_exists(user):
         try:
-            request.user.profile_picture
-            return True
+            profile_picture = user.profile_picture
+            return profile_picture
         except ProfilePicture.DoesNotExist:
-            return False
+            return None

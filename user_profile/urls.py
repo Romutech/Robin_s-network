@@ -2,7 +2,6 @@ from django.urls import path
 from user_profile import views
 
 urlpatterns = [
-    path('', views.read_profile, name='read_profile'),
     path('edit', views.create_or_update_profile, name='edit_profile'),
     path(
         'upload_profile_picture',
@@ -14,4 +13,5 @@ urlpatterns = [
         views.delete_profile_picture,
         name='delete_profile_picture'
     ),
+    path('<user_id>', views.read_profile, name='read_profile'),
 ]
