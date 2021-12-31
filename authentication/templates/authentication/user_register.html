@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-    Connexion
+    Inscription
 {% endblock %}
 {% block content %}
     {% if messages %}
@@ -11,8 +11,8 @@
         </ul>
     {% endif %}
     <div style="padding-top: 50px; padding-left: 7%; padding-right: 6%; padding-bottom: 30px;" class="ds">
-        <p style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;">Formulaire de connexion : </p>
-        <form action="{% url 'user_login' %}" method="post">
+        <p style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;">Formulaire d'inscription : </p>
+        <form action="{% url 'user_register' %}" method="post">
             {% csrf_token %}
             <div style="font-size: 1.2em" > {{ form.as_p }} </div>
             <br>

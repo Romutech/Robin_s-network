@@ -3,10 +3,8 @@ from django.shortcuts import render, redirect
 from .forms import UserProfileForm, ProfilePictureForm
 from .models import UserProfile, ProfilePicture
 
-
+@login_required
 def create_or_update_profile(request):
-    if not request.user.is_authenticated:
-        return redirect('user_login')
     picture_connected_user = ProfilePicture.get_profile_picture_if_exists(
         request.user
     )
@@ -27,14 +25,18 @@ def read_profile(request, user_id):
         picture_connected_user = ProfilePicture.get_profile_picture_if_exists(
             request.user
         )
-        name_connected_user = f"{request.user.user_profile.first_name} " \
-                              f"{request.user.user_profile.last_name}"
+        if UserProfile.is_exist(request):
+            name_connected_user = f"{request.user.user_profile.first_name} " \
+                                  f"{request.user.user_profile.last_name}"
     try:
         if not user_id.isnumeric():
             return render(request, 'user_profile/404.html', locals())
         profile = UserProfile.objects.get(user_id=user_id)
     except UserProfile.DoesNotExist:
-        return render(request, 'user_profile/404.html', locals())
+        if str(request.user.id) == user_id:
+            return redirect('edit_profile')
+        else:
+            return render(request, 'user_profile/404.html', locals())
     profile_picture = ProfilePicture.get_profile_picture_if_exists(
         profile.user
     )
