@@ -4,8 +4,9 @@ from .forms import UserProfileForm, ProfilePictureForm
 from .models import UserProfile, ProfilePicture
 
 
-@login_required
 def create_or_update_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
     picture_connected_user = ProfilePicture.get_profile_picture_if_exists(
         request.user
     )
@@ -17,7 +18,7 @@ def create_or_update_profile(request):
         user_profile = form.save(commit=False)
         user_profile.user = request.user
         user_profile.save()
-        return redirect('read_profile')
+        return redirect('read_profile', request.user.id)
     return render(request, 'user_profile/edit_profile.html', locals())
 
 
@@ -40,8 +41,12 @@ def read_profile(request, user_id):
     return render(request, 'user_profile/profile.html', locals())
 
 
-@login_required
 def upload_profile_picture(request):
+    if request.user.is_authenticated:
+        print("oui loggé")
+    else:
+        print("non pas loggué")
+
     picture_connected_user = ProfilePicture.get_profile_picture_if_exists(
         request.user
     )

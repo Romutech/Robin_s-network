@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}
+    Edition de votre profil
+{% endblock %}
+{% block content %}
+{% if messages %}
+<ul class="messages ds">
+    {% for message in messages %}
+    <h3><li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li></h3>
+    {% endfor %}
+</ul>
+{% endif %}
+    <div style="padding-top: 50px; padding-left: 7%; padding-right: 6%; padding-bottom: 30px;" class="ds">
+        <p style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;">Formulaire de connexion : </p>
+        <form action="{% url 'user_login' %}" method="post">
+            {% csrf_token %}
+            <div style="font-size: 1.2em" > {{ form.as_p }} </div>
+            <br>
+        <input style="background-color: grey; color: white; padding: 0.6em; border-radius: 6px; font-size:1.15em" type="submit" value=" Enregistrer " />
+        </form>
+
+    </div>
+{% endblock %}
