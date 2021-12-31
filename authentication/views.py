@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from authentication.forms import LoginForm
 
@@ -25,3 +25,8 @@ def user_login(request):
         else:
             messages.error(request, 'Identifiant ou mot de passe inconnu !')
     return render(request, 'authentication/user_login.html', locals())
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('user_login')

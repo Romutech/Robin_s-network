@@ -40,13 +40,8 @@ def read_profile(request, user_id):
     )
     return render(request, 'user_profile/profile.html', locals())
 
-
+@login_required
 def upload_profile_picture(request):
-    if request.user.is_authenticated:
-        print("oui loggé")
-    else:
-        print("non pas loggué")
-
     picture_connected_user = ProfilePicture.get_profile_picture_if_exists(
         request.user
     )
