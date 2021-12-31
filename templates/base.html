@@ -42,11 +42,13 @@
                 <!--  notification start -->
                 <ul class="nav top-menu">
                     <!-- inbox dropdown start-->
-                    <li id="header_inbox_bar" class="dropdown">
+                    {% if request.user.is_authenticated %}
+                    <!--<li id="header_inbox_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                             <i class="fa fa-envelope-o"></i>
                             <span class="badge">5</span>
                         </a>
+
                         <ul class="dropdown-menu extended inbox">
                             <div class="notify-arrow notify-arrow-black"></div>
                             <li>
@@ -68,14 +70,21 @@
                                 <a href="index.html#">Voir tous les messages</a>
                             </li>
                         </ul>
-                    </li>
+
+                    </li>-->
+                    {% endif %}
                     <!-- inbox dropdown end -->
                 </ul>
                 <!--  notification end -->
             </div>
             <div class="top-menu">
             	<ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="login.html">Déconnexion</a></li>
+                    {% if request.user.is_authenticated %}
+                        <li><a class="logout" href="{% url 'user_logout' %}">Déconnexion</a></li>
+                    {% else %}
+                        <li><a class="logout" href="{% url 'user_login' %}">Connexion</a></li>
+                        <li><a class="logout" href="{% url 'user_register' %}">inscription</a></li>
+                    {% endif%}
             	</ul>
             </div>
         </header>
@@ -121,20 +130,22 @@
                        </section>
                   </div><!-- /col-lg-9 END SECTION MIDDLE -->
                   <div class="col-lg-3 ds">
-                    <!--COMPLETED ACTIONS DONUTS CHART-->
-						<h3>NOTIFICATIONS</h3>
+                      {% if request.user.is_authenticated %}
+                        <!--COMPLETED ACTIONS DONUTS CHART-->
+                        <!--<h3>NOTIFICATIONS</h3>
 
-                      <!-- First Action -->
-                      <div class="desc">
-                      	<div class="thumb">
-                      		<span class="badge"><i class="fa fa-clock-o"></i></span>
-                      	</div>
-                      	<div class="details">
-                      		<p><muted>Il y a 3 heurs</muted><br/>
-                      		   <a href="#">Emmanuel Macron</a> Vous a ajouté en ami !<br/>
-                      		</p>
-                      	</div>
-                      </div>
+                        &lt;!&ndash; First Action &ndash;&gt;
+                        <div class="desc">
+                            <div class="thumb">
+                                <span class="badge"><i class="fa fa-clock-o"></i></span>
+                            </div>
+                            <div class="details">
+                                <p><muted>Il y a 3 heurs</muted><br/>
+                                    <a href="#">Emmanuel Macron</a> Vous a ajouté en ami !<br/>
+                                </p>
+                            </div>
+                        </div>-->
+                      {% endif %}
                   </div><!-- /col-lg-3 -->
               </div><! --/row -->
           </section>
