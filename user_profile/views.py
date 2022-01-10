@@ -3,11 +3,9 @@ from django.shortcuts import render, redirect
 from .forms import UserProfileForm, ProfilePictureForm
 from .models import UserProfile, ProfilePicture
 
+
 @login_required
 def create_or_update_profile(request):
-    picture_connected_user = ProfilePicture.get_profile_picture_if_exists(
-        request.user
-    )
     profile = None
     if UserProfile.is_exist(request):
         profile = request.user.user_profile
@@ -21,13 +19,6 @@ def create_or_update_profile(request):
 
 
 def read_profile(request, user_id):
-    if request.user.is_authenticated:
-        picture_connected_user = ProfilePicture.get_profile_picture_if_exists(
-            request.user
-        )
-        if UserProfile.is_exist(request):
-            name_connected_user = f"{request.user.user_profile.first_name} " \
-                                  f"{request.user.user_profile.last_name}"
     try:
         if not user_id.isnumeric():
             return render(request, 'user_profile/404.html', locals())
@@ -37,20 +28,13 @@ def read_profile(request, user_id):
             return redirect('edit_profile')
         else:
             return render(request, 'user_profile/404.html', locals())
-    profile_picture = ProfilePicture.get_profile_picture_if_exists(
-        profile.user
-    )
+    profile_picture = ProfilePicture.get_profile_picture(profile.user)
     return render(request, 'user_profile/profile.html', locals())
+
 
 @login_required
 def upload_profile_picture(request):
-    picture_connected_user = ProfilePicture.get_profile_picture_if_exists(
-        request.user
-    )
-    profile_picture = None
-    profile_picture = ProfilePicture.get_profile_picture_if_exists(
-        request.user
-    )
+    profile_picture = ProfilePicture.get_profile_picture(request.user)
     form = ProfilePictureForm(
         request.POST or None, request.FILES or None, instance=profile_picture
     )
@@ -66,9 +50,7 @@ def upload_profile_picture(request):
 
 @login_required
 def delete_profile_picture(request):
-    profile_picture = ProfilePicture.get_profile_picture_if_exists(
-        request.user
-    )
+    profile_picture = ProfilePicture.get_profile_picture(request.user)
     if profile_picture:
         profile_picture.delete()
     return redirect('read_profile', request.user.id)

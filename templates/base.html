@@ -95,14 +95,14 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-                  {% if picture_connected_user %}
-                    <p class="centered"><a href="{% url 'upload_profile_picture' %}"><img src="{{ picture_connected_user.picture.url }}" class="img-circle" width="150"></a></p>
+                  {% if request.user.profile_picture.picture %}
+                    <p class="centered"><a href="{% url 'upload_profile_picture' %}"><img src="{{ request.user.profile_picture.picture.url }}" class="img-circle" width="150"></a></p>
                   {% else %}
                     <p class="centered"><a href="{% url 'upload_profile_picture' %}"><img src="{% static 'img/profile_picture.jpg' %}" class="img-circle" width="150"></a></p>
                   {% endif %}
                   {% if request.user.is_authenticated %}
                     <br>
-                    <h4 class="centered" style="color: white">{{ name_connected_user}}</h4>
+                    <h4 class="centered" style="color: white">{{ request.user.user_profile.first_name }} {{ request.user.user_profile.last_name }}</h4>
                     <hr>
                     <li><a href="{% url 'read_profile' request.user.id %}">Profil</a></li>
                     <li><a href="{% url 'edit_profile'  %}">Editer le Profil</a></li>

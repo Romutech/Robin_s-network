@@ -22,9 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
     path('', include('user_profile.urls')),
+    path('messaging/', include('messaging.urls')),
 ]
 
-if settings.DEBUG: # new
+if settings.DEBUG:  # new
     urlpatterns += static(
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
     )
