@@ -1,32 +1,61 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
 
-from user_profile.models import ProfilePicture
-from .models import Conversation
-
-from messaging.forms import MessageForm
+from .models import Conversation, Message
 
 
 @login_required
-def messaging(request, user_receiver):
-    picture_connected_user = ProfilePicture.get_profile_picture(request.user)
-    form = MessageForm(request.POST or None)
-    if form.is_valid():
-        message = form.save(commit=False)
+def send_message(request, receiver_id):
+    try:
+        receiver_user = User.objects.get(id=receiver_id)
+    except User.DoesNotExist:
+        return redirect(request, 'read_profile', request.user.id)
+    if request.method == 'POST':
+        if len(request.POST.get('message')) == 0:
+            return redirect('read_messages', receiver_id)
         try:
             conversation = Conversation.objects.get(
-                user_1=request.user, user_2=message.receiver
+                user_1=request.user, user_2=receiver_user
             )
         except Conversation.DoesNotExist:
             try:
                 conversation = Conversation.objects.get(
-                    user_1=message.receiver, user_2=request.user
+                    user_1=receiver_user, user_2=request.user
                 )
             except Conversation.DoesNotExist:
                 conversation = Conversation.objects.create(
-                    user_1=request.user, user_2=message.receiver
+                    user_1=request.user, user_2=receiver_user
                 )
-        message.conversation = conversation
-        message.author = request.user
-        message.save()
+        Message.objects.create(
+            conversation=conversation,
+            author=request.user,
+            receiver=receiver_user,
+            message=request.POST.get('message')
+        )
+    return redirect('read_messages', receiver_id)
+
+
+@login_required
+def read_messages(request, contact_id):
+    conversation = None
+    try:
+        receiver_user = User.objects.get(id=contact_id)
+    except User.DoesNotExist:
+        return redirect(request, 'read_profile', request.user.id)
+    try:
+        conversation = Conversation.objects.get(
+            user_1=request.user, user_2=receiver_user
+        )
+    except Conversation.DoesNotExist:
+        try:
+            conversation = Conversation.objects.get(
+                user_1=receiver_user, user_2=request.user
+            )
+        except Conversation.DoesNotExist:
+            pass
+    try:
+        messages = conversation.messages.all()
+    except:
+        message = []
     return render(request, 'messaging/messaging.html', locals())

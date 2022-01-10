@@ -12,7 +12,7 @@ class Conversation(models.Model):
 
 
 class Message(models.Model):
-    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE, related_name="messages")
     author = models.ForeignKey(
         User, models.SET_NULL, blank=True, null=True, related_name="author"
     )

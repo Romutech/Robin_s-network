@@ -1,6 +1,7 @@
 from django.urls import path
-from user_profile import views
+from messaging import views
 
 urlpatterns = [
-    path('', views.messaging, name='messaging'),
+    path('send/<receiver_id>', views.send_message, name='send_message'),
+    path('read/<contact_id>', views.read_messages, name='read_messages'),
 ]

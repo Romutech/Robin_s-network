@@ -3,13 +3,25 @@
     Messagerie
 {% endblock %}
 {% block content %}
-    <div style="padding-top: 50px; padding-left: 7%; padding-right: 6%; padding-bottom: 30px;" class="ds">
-        <p style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;"> Conversation avec {{ user_receiver.firstname }} </p>
-        <form action="{% url 'edit_profile' %}" method="post">
+    <div style="padding-top: 30px; padding-left: 7%; padding-right: 6%; padding-bottom: 30px;" class="ds">
+        <p class="centered" style="font-size:1.5em; marging-top: 20px; margin-bottom: 20px;"> <img src="{{ request.user.profile_picture.picture.url }}" class="img-circle" width="80"> &nbsp; ➔ &nbsp; Conversation avec {{ receiver_user.user_profile.first_name }} {{ receiver_user.user_profile.last_name }} &nbsp; ➔ &nbsp; <img src="{{ receiver_user.profile_picture.picture.url }}" class="img-circle" width="80"> </p>
+        <div id="chat" style="overflow:scroll; border:#000000 1px solid; height: 270px; padding: 20px;">
+            {% for message in messages %}
+                <p style="font-size:1.1em"><img src="{{ message.author.profile_picture.picture.url }}" class="img-circle" width="30"> {{ message.author }} : {{ message.message }}</p>
+            {% empty %}
+                <p> Pas de message pour le moment !</p>
+            {% endfor %}
+            <script>
+                element = document.getElementById('chat');
+                element.scrollTop = element.scrollHeight;
+            </script>
+        </div>
+    </div>
+    <div style="margin-top: 10px;padding-top: 20px; padding-left: 7%; padding-right: 6%; padding-bottom: 20px;" class="ds">
+        <form action="{% url 'send_message' contact_id %}" method="post">
             {% csrf_token %}
-            <div style="font-size: 1.2em" > {{ form.as_p }} </div>
-            <br>
-        <input style="background-color: grey; color: white; padding: 0.6em; border-radius: 6px; font-size:1.15em" type="submit" value=" Enregistrer " />
+            <textarea style="font-size:1.1em; background-color: silver; color: black" id="message" name="message" rows="2" cols="75"></textarea>
+            <input style="position: relative; top: -20px; left: 20px; background-color: grey; color: white; padding: 0.7em; border-radius: 6px; font-size:1.15em" type="submit" value=" Envoyer " />
         </form>
 
     </div>
